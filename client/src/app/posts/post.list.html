@@ -1,0 +1,52 @@
+<md-content layout="column" layout-fill>
+  <header>
+    <acme-navbar creation-date="vm.creationDate"></acme-navbar>
+  </header>
+  <md-card ng-repeat="post in vm.postList">
+    <md-card-header>
+      <md-card-header-text>
+        <span class="md-title">{{post.title}}</span>
+        <span class="md-subhead">{{post.author.first_name + ' ' + post.author.last_name}}</span>
+      </md-card-header-text>
+      <md-button class="md-icon-button md-warn" ng-click="vm.deletePost(post)" aria-label="delete">
+        <ng-md-icon icon="delete"></ng-md-icon>
+      </md-button>
+    </md-card-header>
+    <md-card-content>
+      <p>
+        {{post.content}}
+      </p>
+    </md-card-content>
+    <md-card-actions layout="row" layout-align="space-between center">
+      <p ng-repeat="tag in post.tags">{{tag}}</p>
+    </md-card-actions>
+  </md-card>
+
+  <div layout-padding>
+    <form ng-submit="vm.createPost()" name="postForm">
+      <md-input-container class="md-block">
+        <label>Post Title</label>
+        <input ng-model="vm.post.title" required type="text" aria-label="title">
+      </md-input-container>
+      <md-input-container class="md-block">
+        <label>Content</label>
+        <textarea ng-model="vm.post.content" md-maxlength="200" rows="5" md-select-on-focus></textarea>
+      </md-input-container>
+      <md-input-container>
+        <label>Author</label>
+        <md-select ng-model="vm.post.author">
+          <md-option><em>None</em></md-option>
+          <md-option ng-repeat="user in vm.userList" ng-value="user">
+            {{user.first_name + ' ' + user.last_name}}
+          </md-option>
+        </md-select>
+      </md-input-container>
+      <div>
+        <md-button type="submit" class="md-primary" aria-label="save butto button">
+          Save
+        </md-button>
+      </div>
+    </form>
+  </div>
+
+</md-content>
